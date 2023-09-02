@@ -1,10 +1,10 @@
 import express from 'express';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-import UserModel from './components/users.js'
-import {validationResult} from 'express-validator';
-import {registerValidation} from './validations/auth.js';
+import checkLogin from './utils/checkLogin.js'
+import {registerValidation,loginValidation,postCreateValidation} from './validations/auth.js';
+import {registration,login,getInfo} from './controllers/authentification.js'
+import {postCreate,getAllPosts,getOnePost,deletePost,updatePost} from './controllers/postControll.js'
+
 
 mongoose.connect('mongodb+srv://ramazanmamanov840:r1o2m3a4@cluster1.oevaek4.mongodb.net/blog?retryWrites=true&w=majority')
 .then(() => {
@@ -17,102 +17,18 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/auth/login', async(req, res) => {
-  try{
-    const user = await UserModel.findOne({email: req.body.email});
+app.post('/auth/register',registerValidation, registration);
+app.post('/auth/login',loginValidation, login);
+app.get('/auth/me',checkLogin, getInfo);
 
-    if(!user){
-      res.status(404).json({
-        message: 'User not found',
-      })
-    }
+app.get('/posts',getAllPosts);
+app.get('/posts/:id',getOnePost);
 
-    const isValidPassword = await bcrypt.compare(req.body.password,user._doc.passwordKey)
-
-    if(!isValidPassword){
-      res.status(404).json({
-        message:'Wrong password or login',
-      })
-    }
+app.post('/posts',checkLogin,postCreateValidation, postCreate);
+app.delete('/posts/:id',checkLogin,deletePost);
+app.patch('/posts/:id',checkLogin,updatePost);
 
 
-    const token = jwt.sign({
-
-      _id: user._id,
-
-    },
-    'secret',
-    {
-
-      expiresIn: '30days',
-
-    },
-    );
-
-    const { passwordKey , ...userData } = user._doc
-
-    res.json({
-    ...userData,
-    token
-  });
-
-  }catch(err){
-    console.log(err)
-    res.json({
-      message:'Cant auth'
-    })
-  }
-})
-
-app.post('/auth/register',registerValidation, async (req, res) => {
-try{
-
-  const error = validationResult(req)
-  
-  if(!error.isEmpty()) {
-    return res.status(400).json(error.array());
-  }
-
-  const password = req.body.password;
-
-  const salt = await bcrypt.genSalt(10);
-
-  const Key = await bcrypt.hash(password,salt);
-
-  const doc = new UserModel({
-    email: req.body.email,
-    fullName: req.body.fullName,
-    imageUrl: req.body.imageUrl,
-    passwordKey:Key,
-  }) 
-
-  const user = await doc.save()
-
-  const token = jwt.sign({
-    _id: user._id,
-  }
-  ,'secret',
-  {
-    expiresIn: '30days',
-  },
-  );
-
-  const { passwordKey , ...userData } = user._doc
-  res.json({
-    ...userData,
-    token
-  });
-
-}catch(err){
-
-  console.log(err);
-
-  res.status(500).json({
-    message:'Error authenticating user'
-  })
-
-}
-});
 
 app.listen(4444, (err) => {
 

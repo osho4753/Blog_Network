@@ -1,0 +1,135 @@
+import PostSchema from '../components/post.js';
+
+export const getAllPosts = async (req,res) =>{
+try{
+
+    const posts = await PostSchema.find().populate('user');
+    res.json(posts);
+
+}catch(err){
+    console.log(err);
+        res.status(500).json({
+
+            message:'Cant find posts'
+
+        });
+}
+};
+
+export const getOnePost = async (req,res) =>{
+    try{
+
+        const post_id = req.params.id;
+
+        const updatedDoc = await PostSchema.findOneAndUpdate(
+        {
+            _id:post_id,
+        },
+        {
+            $inc:{viewsCount:1},
+        },
+        {
+            returnDocument:'after'
+        })
+    
+        if(!updatedDoc){
+                return res.status(404).json({
+                message:'Cant find post'
+                })
+        }
+        
+        res.json(updatedDoc);
+        
+    }catch(err){
+        console.log(err);
+            res.status(500).json({
+    
+                message:'Cant find exact post'
+    
+            });
+    }
+};
+
+export const postCreate = async(req, res) => {
+    try{
+        const doc = new PostSchema({
+            title:req.body.title,
+            text:req.body.text,
+            tags:req.body.tags,
+            PostImageUrl:req.body.postImageUrl,
+            user:req.userId,
+        })
+
+        const post = await doc.save();
+        res.json(post);
+    }catch(err){
+
+        console.log(err);
+        res.status(500).json({
+
+            message:'Error saving post'
+
+        });
+    }
+
+};
+
+export const deletePost = async (req,res) =>{
+    try{
+
+        const post_id = req.params.id;
+
+        const deletedDoc = await PostSchema.findOneAndDelete(
+        {
+            _id:post_id,
+        })
+
+        if(!deletedDoc){
+                return res.status(404).json({
+                message:'Cant find post'
+                })
+        }
+        
+        res.json({
+            message:'Post deleted'
+        });
+        
+    }catch(err){
+        console.log(err);
+            res.status(500).json({
+    
+                message:'Cant find exact post'
+    
+            });
+    }
+};
+
+export const updatePost = async (req,res) =>{
+    try{
+
+        const post_id = req.params.id;
+
+        await PostSchema.updateOne(
+        {
+            _id:post_id,
+        },{
+            title:req.body.title,
+            text:req.body.text,
+            tags:req.body.tags,
+            PostImageUrl:req.body.PostImageUrl,
+            user:req.userId,
+        })
+        
+        res.json({
+            message:'Post updated'
+        });
+        
+    }catch(err){
+        console.log(err);
+            res.status(500).json({
+    
+                message:'Cant update exact post'
+    
+            });
+    }
+};
