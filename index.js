@@ -1,10 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import multer from 'multer';
+import cors from 'cors';
 import checkLogin from './utils/checkLogin.js'
 import {registerValidation,loginValidation,postCreateValidation} from './validations/auth.js';
 import {registration,login,getInfo} from './controllers/authentification.js'
-import {postCreate,getAllPosts,getOnePost,deletePost,updatePost} from './controllers/postControll.js'
+import {postCreate,getAllPosts,getLastTags,getOnePost,deletePost,updatePost} from './controllers/postControll.js'
 import valErrors from './utils/valErrors.js';
 
 
@@ -29,6 +30,8 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 app.use(express.json());
+app.use(cors());
+
 app.use('/uploads', express.static('uploadImages'))
 
 app.post('/auth/register',registerValidation, valErrors, registration);
@@ -42,7 +45,9 @@ app.post('/uploads',checkLogin,upload.single('image'),(req,res)=>{
 })
 
 app.get('/posts',getAllPosts);
+app.get('/posts/tags',getLastTags);
 app.get('/posts/:id',getOnePost);
+
 
 app.post('/posts',checkLogin,postCreateValidation,valErrors,postCreate);
 app.delete('/posts/:id',checkLogin,deletePost);

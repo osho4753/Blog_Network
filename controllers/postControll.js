@@ -1,5 +1,24 @@
 import PostSchema from '../components/post.js';
 
+
+export const getLastTags = async (req,res) =>{
+    try{
+    
+        const tags = await PostSchema.find();
+
+        const lastTags = [...new Set(tags.map(tag => tag.tags).flat())].slice(0, 5);
+        res.json(lastTags);
+    
+    }catch(err){
+        console.log(err);
+            res.status(500).json({
+    
+                message:'Cant find tags'
+    
+            });
+    }
+};
+
 export const getAllPosts = async (req,res) =>{
 try{
 
