@@ -1,11 +1,10 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Container from '@mui/material/Container';
-
+import '../css/Header.css'; 
 
 export const Header = () => {
-
   return (
     <div className="header">
       <Container maxWidth="lg">
@@ -14,7 +13,7 @@ export const Header = () => {
             <div>Mamanov Page</div>
           </Link>
           <div className="buttons">
-            {(true,false) ? (
+            {(true, false) ? (
               <>
                 <Link to="/posts/create">
                   <Button variant="contained">Write Post</Button>
@@ -26,14 +25,13 @@ export const Header = () => {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outlined">Login</Button>
+                  <Button variant="contained">Login</Button>
                 </Link>
                 <Link to="/registration">
                   <Button variant="contained">Create Account</Button>
                 </Link>
               </>
             )}
-
           </div>
         </div>
       </Container>

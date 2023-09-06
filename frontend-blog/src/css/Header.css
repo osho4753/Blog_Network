@@ -1,0 +1,33 @@
+.header {
+    background-color: #007bff; 
+    color: #fff; 
+    padding: 10px 0; 
+  }
+  
+  
+  .header_name {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+  }
+  
+  
+  .header_name div {
+    font-size: 24px; 
+    color: white; 
+    font-weight: bold; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    background-color: #007bff; 
+    transition: background-color 0.3s ease; 
+  }
+  .header_name div:hover {
+    background-color: #0056b3; 
+  }
+  
+  
+  .buttons {
+    display: flex; 
+    gap: 10px; 
+  }

@@ -1,0 +1,68 @@
+.tags-block-container {
+    padding: 16px; 
+    background-color: #fff;
+    border-radius: 8px; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+  }
+
+  .tag-list {
+    list-style-type: none; 
+    padding: 0; 
+  }
+  
+ 
+  .tag-item {
+    text-decoration: none; 
+    color: #333; 
+    transition: color 0.3s ease; 
+  }
+  
+  .tag-item:hover {
+    color: #007bff; 
+  }
+
+  .comments-list {
+    list-style-type: none; 
+    padding: 0; 
+  }
+  
+  
+  .comment-item {
+    display: flex; 
+    align-items: flex-start; 
+    margin-bottom: 20px; 
+  }
+  
+  
+  .comment-avatar {
+    width: 40px; 
+    height: 40px; 
+    margin-right: 10px; 
+  }
+  
+  
+  .comment-user {
+    font-weight: bold; 
+  }
+  
+  
+  .comment-text {
+    flex-grow: 1; 
+  }
+  
+  
+  .comment-divider {
+    margin-top: 10px; 
+  }
+  .sides {
+    padding: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    background-color: #fff; 
+  }
+  
+  
+  .sides-head {
+    font-size: 18px; 
+    margin-bottom: 15px; 
+    font-weight: bold; 
+  }

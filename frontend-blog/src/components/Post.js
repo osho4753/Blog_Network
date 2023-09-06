@@ -5,7 +5,8 @@ import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-
+import { UserInfo } from './UserInfo';
+import '../css/Post.css'; 
 
 export const Post = ({
   _id,
@@ -24,7 +25,7 @@ export const Post = ({
   const onClickRemove = () => {};
 
   return (
-    <div>
+    <div className="post-container"> 
       {isEditable && (
         <div className="buttons">
           <Link to={`/posts/${_id}/edit`}>
@@ -39,12 +40,13 @@ export const Post = ({
       )}
       {imageUrl && (
         <img
+          className="post-image"
           src={imageUrl}
           alt={title}
         />
       )}
       <div className="post-head">
-        {/* <UserInfo {...user} additionalText={createdAt} /> */}
+        <UserInfo {...user} additionalText={createdAt} />
         <div className="post-head">
           <h2 className="link-post">
             {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
@@ -56,7 +58,7 @@ export const Post = ({
               </li>
             ))}
           </ul>
-          {/* {children && <div className={styles.content}>{children}</div>} */}
+          {children && <div className="child">{children}</div>}
           <ul className="post-details">
             <li>
               <EyeIcon />
