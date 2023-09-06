@@ -10,10 +10,12 @@ import '../css/index.css';
 export const Home = () => {
   return (
     <div className="home-container">
-      <Tabs style={{ marginBottom: 40 }} value={0}>
-        <Tab label="New" />
-        <Tab label="Popular" />
-      </Tabs>
+      <div className="tabs-container">
+        <Tabs value={0}>
+          <Tab label="New" />
+          <Tab label="Popular" />
+        </Tabs>
+      </div>
       <div className="content-container">
         <Grid container spacing={4}>
           <Grid xs={8} item className="posts-container">

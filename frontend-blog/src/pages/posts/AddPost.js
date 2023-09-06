@@ -14,7 +14,7 @@ export const AddPost = () => {
   const onChange = React.useCallback((value) => {
     setValue(value);
   }, []);
-
+  console.log(value);
   const options = React.useMemo(
     () => ({
       spellChecker: false,
