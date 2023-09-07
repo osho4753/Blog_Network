@@ -43,9 +43,9 @@ app.post('/uploads',checkLogin,upload.single('image'),(req,res)=>{
     url: `/uploads/${req.file.originalname}`,
   })
 })
+app.get('/tags',getLastTags);
 
 app.get('/posts',getAllPosts);
-app.get('/posts/tags',getLastTags);
 app.get('/posts/:id',getOnePost);
 
 
