@@ -37,7 +37,6 @@ try{
 
 export const getOnePost = async (req,res) =>{
     try{
-
         const post_id = req.params.id;
         const updatedDoc = await PostSchema.findOneAndUpdate(
         {
