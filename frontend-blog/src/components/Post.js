@@ -12,7 +12,7 @@ export const Post = ({
   _id,
   title,
   createdAt,
-  imageUrl,
+  PostImageUrl,
   user,
   viewsCount,
   commentsCount,
@@ -38,10 +38,10 @@ export const Post = ({
           </IconButton>
         </div>
       )}
-      {imageUrl && (
+      {PostImageUrl && (
         <img
           className="post-image"
-          src={imageUrl}
+          src={PostImageUrl}
           alt={title}
         />
       )}

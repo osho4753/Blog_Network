@@ -8,12 +8,17 @@ import { TagsBlock } from '../components/TagsBlock.js';
 import { CommentsBlock } from '../components/CommentsBlock';
 import '../css/index.css';
 import { fetchPosts, fetchTags } from '../redux/slices/posts';
-
+import { selectUserData } from '../redux/slices/auth';
 export const Home = () => {
   const dispatch = useDispatch();
+
+  const userData = useSelector(selectUserData);
+
   const {posts,tags} = useSelector((state)=>state.posts);
+
   const postLoading = posts.status === "loading"
   const tagsLoading = tags.status === "loading"
+
   React.useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
@@ -30,19 +35,19 @@ export const Home = () => {
       <div className="content-container">
         <Grid container spacing={4}>
           <Grid xs={8} item className="posts-container">
-            {(postLoading ? [] : posts.items).map ((obj,index) => postLoading?(
+            {(postLoading ? [] : posts.items).map ((obj,index) => postLoading ? (
               <Post/>
             ):(
               <Post
-                id={obj.id}
+                _id={obj._id}
                 title={obj.title}
-                imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
+                PostImageUrl='https://tse3.mm.bing.net/th?id=OIP.p-aZsNRUiC7FilHb3hnEYgHaE8&pid=Api&P=0&h=180'
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
                 commentsCount={3}
                 tags={obj.tags}
-                isEditable
+                isEditable = {userData?._id === obj.user._id}
               />
             ))}
           </Grid>

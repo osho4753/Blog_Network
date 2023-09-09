@@ -2,10 +2,16 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-
+import {  useSelector } from 'react-redux';
+import { isAuth } from "../../redux/slices/auth";
 export const AddPost = () => {
+  
+
   const imageUrl = '';
   const [value, setValue] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [tags, setTags] = React.useState('');
+
 
   const handleChangeFile = () => {};
 
@@ -14,6 +20,7 @@ export const AddPost = () => {
   const onChange = React.useCallback((value) => {
     setValue(value);
   }, []);
+
   console.log(value);
   const options = React.useMemo(
     () => ({
@@ -29,11 +36,10 @@ export const AddPost = () => {
     }),
     [],
   );
-
   return (
     <Paper style={{ padding: 30 }}>
       <Button variant="outlined" size="large">
-        Upload test
+        Upload posts image
       </Button>
       <input type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
@@ -50,9 +56,26 @@ export const AddPost = () => {
         classes="textField"
         variant="standard"
         placeholder="Blogs Title"
+        value = {title}
+        onChange={(e)=>(setTitle(e.target.value))}
         fullWidth
       />
-      <TextField classes="textField" variant="standard" placeholder="Tags" fullWidth />
+      <TextField 
+      classes="textField" 
+      variant="standard" 
+      placeholder="Tags" 
+      value = {tags}
+      onChange={(e)=>(setTags(e.target.value))}
+      fullWidth />
+      <TextField
+      value={value}
+      onChange={(e)=>(setValue(e.target.value))}
+      classes="textField"
+      variant="standard"
+      placeholder="Type your post"
+      fullWidth
+      {...options} 
+/>
       <div className="button">
         <Button size="large" variant="contained">
           Publish

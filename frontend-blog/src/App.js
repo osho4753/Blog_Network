@@ -7,8 +7,23 @@ import {FullPost} from "./pages/posts/FullPost.js";
 import { Registration } from "../src/pages/authentification/Register.js";
 import { Login } from "../src/pages/authentification/Login.js";
 import { AddPost } from "../src/pages/posts/AddPost.js";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser, isAuth } from "./redux/slices/auth";
+
 
 function App() {
+
+  const dispatch = useDispatch();
+  const Auth = useSelector(isAuth)
+  console.log(Auth);
+
+ 
+  React.useEffect(() => {
+    dispatch(fetchUser())
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+      });
+  }, [dispatch]);
   return (
   <>
     <Header/>
