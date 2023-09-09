@@ -26,7 +26,8 @@ user:{
     required: true,
 },
 
-PostImageUrl: String,
+postUrl: String
+
 
 },{
     timestamps: true,
