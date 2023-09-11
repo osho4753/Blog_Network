@@ -3,12 +3,16 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import config from '../../config'
+import { useNavigate, useParams } from 'react-router-dom';
 export const AddPost = () => {
+  const {id} = useParams();
+  const isEdit = Boolean(id);
+  const navigate = useNavigate()
   const inputRef = React.useRef(null)
-  const [value, setValue] = React.useState('');
+  const [text, setText] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [tags, setTags] = React.useState('');
-  const [imageUrl, setImageUrl] = React.useState('');
+  const [postUrl, setPostUrl] = React.useState('');
 
   const handleChangeFile = async (event) => {
     try{
@@ -16,7 +20,7 @@ export const AddPost = () => {
         const file = await event.target.files[0];
         formData.append('image',file);
         const {data} = await config.post('/uploads',formData);
-        setImageUrl(data.url)    
+        setPostUrl(data.url)    
       }catch(err){
       console.log(err);
 
@@ -24,19 +28,26 @@ export const AddPost = () => {
   };
 
   const onClickRemoveImage = () => {
-    setImageUrl('')
+    setPostUrl('')
   };
-
-  const onChange = React.useCallback((value) => {
-
-    setValue(value);
-    
-  }, []);
   const onSubmit = async () => {
-    const fields = {title,tags,imageUrl,value}
-     const {data} = await config.post('/posts',fields)
-     console.log(data)
+    try{
+    const fields = {
+      title,
+      tags: tags.split(','),
+      postUrl,
+      text
+    }
+     const {data} = isEdit ? 
+     await config.patch(`/posts/${id}`,fields) : 
+     await config.post('/posts',fields);
 
+      const _id = isEdit ? id : data._id
+
+      navigate(`/posts/${_id}`)
+    }catch(err){
+      console.log(err,'Wrong adding post data!');
+    }
   }
   const options = React.useMemo(
     () => ({
@@ -52,18 +63,33 @@ export const AddPost = () => {
     }),
     [],
   );
+  React.useEffect(() => {
+    if (id) 
+      config.get(`/posts/${id}`)
+        .then(({ data }) => {
+          setTitle(data.title);
+          setTags(data.tags.join(',')); 
+          setPostUrl(data.postUrl);
+          setText(data.text);
+        })
+        .catch(err => {
+          console.warn(err, 'BIG ERROR ');
+        });
+  
+
+  }, []);
   return (
     <Paper style={{ padding: 30 }}>
       <Button onClick={()=>inputRef.current.click()} variant="outlined" size="large">
         Upload posts image
       </Button>
       <input ref={inputRef} type="file" onChange={handleChangeFile} hidden />
-      {imageUrl && (
+      {postUrl && (
         <>
         <Button variant="contained" color="error" onClick={onClickRemoveImage}>
          Delete
        </Button>
-        <img className="post-img" src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+        <img className="post-img" src={`${postUrl}`} alt="Uploaded" />
         </>
       )}
       <br />
@@ -77,15 +103,15 @@ export const AddPost = () => {
         fullWidth
       />
       <TextField 
-      classes="textField" 
+      classes="arrayField" 
       variant="standard" 
       placeholder="Tags" 
       value = {tags}
       onChange={(e)=>(setTags(e.target.value))}
       fullWidth />
       <TextField
-      value={value}
-      onChange={(e)=>(setValue(e.target.value))}
+      value={text}
+      onChange={(e)=>(setText(e.target.value))}
       classes="textField"
       variant="standard"
       placeholder="Type your post"
@@ -94,7 +120,7 @@ export const AddPost = () => {
 />
       <div className="button">
         <Button onClick={onSubmit} size="large" variant="contained">
-          Publish
+          {isEdit ? "Edit" : "Publish"}
         </Button>
         <a href="/">
           <Button size="large">No</Button>

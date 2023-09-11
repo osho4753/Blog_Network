@@ -40,7 +40,7 @@ app.get('/auth/me',checkLogin, getInfo);
 
 app.post('/uploads',checkLogin,upload.single('image'),(req,res)=>{
   res.json({
-    url: `/uploads/${req.file.originalname}`,
+    url: `http://localhost:4444/uploads/${req.file.originalname}`,
   })
 })
 app.get('/tags',getLastTags);

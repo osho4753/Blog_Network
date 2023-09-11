@@ -47,7 +47,7 @@ export const getOnePost = async (req,res) =>{
         },
         {
             returnDocument:'after'
-        })
+        }).populate('user')
     
         if(!updatedDoc){
                 return res.status(404).json({
@@ -70,10 +70,11 @@ export const getOnePost = async (req,res) =>{
 export const postCreate = async(req, res) => {
     try{
         const doc = new PostSchema({
+
             title:req.body.title,
             text:req.body.text,
             tags:req.body.tags,
-            PostImageUrl:req.body.postImageUrl,
+            postUrl:req.body.postUrl,
             user:req.userId,
         })
 
@@ -133,7 +134,7 @@ export const updatePost = async (req,res) =>{
             title:req.body.title,
             text:req.body.text,
             tags:req.body.tags,
-            PostImageUrl:req.body.PostImageUrl,
+            postUrl:req.body.postUrl,
             user:req.userId,
         })
         

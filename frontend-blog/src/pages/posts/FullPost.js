@@ -3,10 +3,10 @@ import {useParams} from "react-router-dom";
 import { Post } from "../../components/Post";
 import { Index } from "../../components/AddComment";
 import { CommentsBlock } from "../../components/CommentsBlock";
+
 import config from '../../config';
 
 export const FullPost = () => {
-
   const [data,setData] = React.useState();
 
   const [Loading,setLoading] = React.useState(true);
@@ -24,7 +24,6 @@ export const FullPost = () => {
     })
   },[id])
 
-
   if (Loading) {
     return <div>Loading...</div>; 
   }
@@ -34,7 +33,7 @@ export const FullPost = () => {
       <Post
         _id={data._id}
         title={data.title}
-        PostImageUrl='https://tse3.mm.bing.net/th?id=OIP.p-aZsNRUiC7FilHb3hnEYgHaE8&pid=Api&P=0&h=180'
+        postUrl={data.postUrl}
         user={data.user}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}

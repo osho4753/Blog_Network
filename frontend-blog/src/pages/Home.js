@@ -13,7 +13,6 @@ export const Home = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector(selectUserData);
-
   const {posts,tags} = useSelector((state)=>state.posts);
 
   const postLoading = posts.status === "loading"
@@ -41,7 +40,7 @@ export const Home = () => {
               <Post
                 _id={obj._id}
                 title={obj.title}
-                PostImageUrl='https://tse3.mm.bing.net/th?id=OIP.p-aZsNRUiC7FilHb3hnEYgHaE8&pid=Api&P=0&h=180'
+                postUrl={obj.postUrl}
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}

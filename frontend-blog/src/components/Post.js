@@ -6,13 +6,15 @@ import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import { UserInfo } from './UserInfo';
+import {  useDispatch } from 'react-redux';
 import '../css/Post.css'; 
+import { fetchDelete } from '../redux/slices/posts';
 
 export const Post = ({
   _id,
   title,
   createdAt,
-  PostImageUrl,
+  postUrl,
   user,
   viewsCount,
   commentsCount,
@@ -22,8 +24,12 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
-  const onClickRemove = () => {};
-
+  const dispatch = useDispatch();
+  const onClickRemove = () => {
+    if(window.confirm('Are you sure you want to delete this post?')){
+      dispatch(fetchDelete(_id));
+    } 
+  };
   return (
     <div className="post-container"> 
       {isEditable && (
@@ -38,10 +44,10 @@ export const Post = ({
           </IconButton>
         </div>
       )}
-      {PostImageUrl && (
+      {postUrl && (
         <img
           className="post-image"
-          src={PostImageUrl}
+          src={postUrl}
           alt={title}
         />
       )}
