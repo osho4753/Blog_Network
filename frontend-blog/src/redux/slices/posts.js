@@ -11,6 +11,12 @@ export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
   return data;
 });
 
+export const fetchPostsByTag = createAsyncThunk('posts/fetchPostsByTag', async (name) => {
+  const { data } = await config.post(`/tags/${name}`);
+  return data;
+});
+
+
 export const fetchDelete = createAsyncThunk('posts/fetchDelete', async (id) => {
   await config.delete(`/posts/${id}`);
 });
@@ -59,6 +65,18 @@ const postSlice = createSlice({
     [fetchDelete.pending]:(state,actions)=>{
       state.posts.items = state.posts.items.filter(post=>post._id !== actions.meta.arg);
     },
+    //Get posts By tagname
+    [fetchPostsByTag.pending]: (state, actions) => {
+      state.posts.status = 'loading';
+    },
+    [fetchPostsByTag.fulfilled]: (state, actions) => {
+      state.posts.items = actions.payload;
+      state.posts.status = 'loaded';
+    },
+    [fetchPostsByTag.rejected]: (state, actions) => {
+      state.posts.items = [];
+      state.posts.status = 'error';
+    },    
   },
 });
 

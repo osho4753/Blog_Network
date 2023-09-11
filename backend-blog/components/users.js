@@ -14,7 +14,11 @@ passwordKey:{
     type : String,
     required: true
 },
-imageUrl: String
+imageUrl: {
+    type:String,
+required: false,
+},
+
 },{
     timestamps: true,
 

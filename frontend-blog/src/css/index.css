@@ -53,3 +53,10 @@
 .send-button {
   flex: 0 0 auto; 
 }
+
+.custom-h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+}

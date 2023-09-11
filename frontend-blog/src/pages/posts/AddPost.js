@@ -73,11 +73,11 @@ export const AddPost = () => {
           setText(data.text);
         })
         .catch(err => {
-          console.warn(err, 'BIG ERROR ');
+          console.warn(err, 'error editing post');
         });
   
 
-  }, []);
+  }, [id]);
   return (
     <Paper style={{ padding: 30 }}>
       <Button onClick={()=>inputRef.current.click()} variant="outlined" size="large">

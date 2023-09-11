@@ -52,7 +52,10 @@ export const Post = ({
         />
       )}
       <div className="post-head">
-        <UserInfo {...user} additionalText={createdAt} />
+        <UserInfo {...user}/>
+        <div className="post-date">
+        {createdAt.replace(/T.+/,'')}
+        </div>
         <div className="post-head">
           <h2 className="link-post">
             {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
@@ -60,7 +63,7 @@ export const Post = ({
           <ul className="tags">
             {tags.map((name) => (
               <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
+                <Link to={`/tags/${name}`}>#{name}</Link>
               </li>
             ))}
           </ul>

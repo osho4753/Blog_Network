@@ -16,7 +16,7 @@ export const registration = async (req, res) => {
         imageUrl: req.body.imageUrl,
         passwordKey:Key,
       }) 
-    
+      console.log(doc);
       const user = await doc.save()
     
       const token = jwt.sign({

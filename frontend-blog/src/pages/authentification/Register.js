@@ -8,9 +8,23 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRegister , isAuth} from "../../redux/slices/auth";
 import { Navigate } from 'react-router-dom'; 
-
+import config from '../../config'
 
 export const Registration = () => {
+  const [imageUrl, setImageUrl] = React.useState('');
+  const inputRef = React.useRef(null)
+
+  const handleChangeFile = async (event) => {
+    try{
+        const formData = new FormData()
+        const file = await event.target.files[0];
+        formData.append('image',file);
+        const {data} = await config.post('/uploads/avatar',formData);
+        setImageUrl(data.url)    
+      }catch(err){
+      console.log(err);
+    }  
+  };
 
   const dispatch = useDispatch();
   const Auth = useSelector(isAuth)
@@ -23,11 +37,14 @@ export const Registration = () => {
       email: "",
       password: "",
       fullName: "",
+      imageUrl: "",
     },
     mode: "onChange",
   });
 
   const onSubmit = async (data) => {
+    data.imageUrl = imageUrl
+    console.log(data)
     const user = await dispatch(fetchRegister(data))
       if(!user.payload){
         alert('cant login')
@@ -49,8 +66,27 @@ export const Registration = () => {
       <Typography classes="register_acc" variant="h5">
         Creating an Account
       </Typography>
-      <div className="register_img">
-        <Avatar sx={{ width: 100, height: 100 }} />
+      <div className="register_img" >
+        {imageUrl ?  
+        (<Avatar
+          sx={{ width: 100, height: 100 }} 
+          src = {imageUrl}
+          />)
+        :
+        (<>
+        <label htmlFor="avatar-upload-button">
+        <Button variant="outlined" component="span">
+           Upload Avatar
+        </Button>
+        </label>
+          <input
+            ref={inputRef}
+            type="file"
+            id="avatar-upload-button"
+            onChange={handleChangeFile}
+            hidden
+          />
+          </>)}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
 <TextField 

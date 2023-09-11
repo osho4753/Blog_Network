@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import {Header} from "./components/Header.js"; 
 import {Route, Routes} from "react-router-dom";
 import {Home } from "./pages/Home.js";
+import {Tags } from "./pages/TagsNamePosts.js";  
 import {FullPost} from "./pages/posts/FullPost.js";
 import { Registration } from "../src/pages/authentification/Register.js";
 import { Login } from "../src/pages/authentification/Login.js";
@@ -15,7 +16,7 @@ function App() {
 
   const dispatch = useDispatch();
   const Auth = useSelector(isAuth)
-  console.log(Auth);
+  console.log(Auth,'InApp');
 
  
   React.useEffect(() => {
@@ -35,6 +36,7 @@ function App() {
       <Route path = "/add-post" element = {<AddPost />} />
       <Route path="/login" element={<Login/>} />
       <Route path = "/registration" element = {<Registration />} />
+      <Route path = "/tags/:name" element = {<Tags />} />
       </Routes>
     </Container>
   </>

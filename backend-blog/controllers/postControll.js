@@ -7,6 +7,7 @@ export const getLastTags = async (req,res) =>{
         const tags = await PostSchema.find();
 
         const lastTags = [...new Set(tags.map(tag => tag.tags).flat())].slice(0, 5);
+
         res.json(lastTags);
     
     }catch(err){
@@ -47,7 +48,8 @@ export const getOnePost = async (req,res) =>{
         },
         {
             returnDocument:'after'
-        }).populate('user')
+        })
+        .populate('user')
     
         if(!updatedDoc){
                 return res.status(404).json({
@@ -147,6 +149,21 @@ export const updatePost = async (req,res) =>{
             res.status(500).json({
     
                 message:'Cant update exact post'
+    
+            });
+    }
+};
+
+export const getPostsByTag = async (req,res) =>{
+    try{
+        const tagName = req.params.name;
+        const tagsbyPost = await PostSchema.find({ tags: tagName }).populate('user').exec();
+        res.json(tagsbyPost)
+    }catch(err){
+        console.log(err);
+            res.status(500).json({
+    
+                message:'Cant find tags'
     
             });
     }

@@ -30,6 +30,7 @@ export const FullPost = () => {
 
   return (
     <>
+    <div className="full-post">
       <Post
         _id={data._id}
         title={data.title}
@@ -44,7 +45,6 @@ export const FullPost = () => {
         <p> {data.text} </p>
         
       </Post>
-    
       <CommentsBlock
         items={[
           {
@@ -66,6 +66,7 @@ export const FullPost = () => {
       >
         <Index />
       </CommentsBlock>
+      </div>
     </>
   );
       
