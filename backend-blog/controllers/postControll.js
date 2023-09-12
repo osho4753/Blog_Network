@@ -39,6 +39,7 @@ try{
 export const getOnePost = async (req,res) =>{
     try{
         const post_id = req.params.id;
+
         const updatedDoc = await PostSchema.findOneAndUpdate(
         {
             _id:post_id,
@@ -50,6 +51,10 @@ export const getOnePost = async (req,res) =>{
             returnDocument:'after'
         })
         .populate('user')
+        .populate({
+            path: 'comments.user', 
+            model: 'User',
+        });
     
         if(!updatedDoc){
                 return res.status(404).json({

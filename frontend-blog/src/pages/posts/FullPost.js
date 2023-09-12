@@ -47,10 +47,10 @@ export const FullPost = () => {
         
       </Post>
       <CommentsBlock
-        items={ data.comments.map(comment => [
+        items={ data.comments.map(e => [
           {
-            user: comment.user,
-            text: comment.text ,
+            user: e.user,
+            text: e.text ,
           },
         ])
       }
