@@ -14,4 +14,6 @@ export const postCreateValidation = [
         body('text','Type Please Your Text').isLength({min:3}).isString(),
         body('tags','Incorrect Tags Format(type array)').optional().isArray(),
         body('postUrl','Incorrect Image Type').optional().isString(),
+        body('comments','No comments').optional(),
+
 ]

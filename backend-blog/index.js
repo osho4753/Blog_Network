@@ -5,7 +5,7 @@ import cors from 'cors';
 import checkLogin from './utils/checkLogin.js'
 import {registerValidation,loginValidation,postCreateValidation} from './validations/auth.js';
 import {registration,login,getInfo} from './controllers/authentification.js'
-import {postCreate,getAllPosts,getLastTags,getOnePost,deletePost,updatePost,getPostsByTag} from './controllers/postControll.js'
+import {postCreate,getAllPosts,getLastTags,getOnePost,deletePost,updatePost,getPostsByTag,commentAdd} from './controllers/postControll.js'
 import valErrors from './utils/valErrors.js';
 
 
@@ -37,6 +37,8 @@ app.use('/uploads', express.static('uploadImages'))
 app.post('/auth/register',registerValidation, valErrors, registration);
 app.post('/auth/login',loginValidation, valErrors, login);
 app.get('/auth/me',checkLogin, getInfo);
+
+
 app.post('/uploads/avatar',upload.single('image'),(req,res)=>{
   res.json({
     url: `http://localhost:4444/uploads/${req.file.originalname}`,
@@ -47,14 +49,17 @@ app.post('/uploads',checkLogin,upload.single('image'),(req,res)=>{
     url: `http://localhost:4444/uploads/${req.file.originalname}`,
   })
 })
+
+
 app.get('/tags',getLastTags);
 app.post('/tags/:name',getPostsByTag);
 
 app.get('/posts',getAllPosts);
 app.get('/posts/:id',getOnePost);
 
-
 app.post('/posts',checkLogin,postCreateValidation,valErrors,postCreate);
+app.post('/posts/comment/:id',checkLogin,commentAdd);
+
 app.delete('/posts/:id',checkLogin,deletePost);
 app.patch('/posts/:id',checkLogin,valErrors,updatePost);
 

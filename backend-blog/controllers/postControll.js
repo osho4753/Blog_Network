@@ -168,3 +168,28 @@ export const getPostsByTag = async (req,res) =>{
             });
     }
 };
+
+export const commentAdd = async(req, res) => {
+        try{
+
+            const post_id = req.params.id;
+            const newComment = req.body;
+            await PostSchema.updateOne(
+                { _id: post_id },
+                {
+                  $push: { comments: newComment },
+                }
+              );
+            res.json({
+                message:'comment added successfully'
+            });
+                }catch(err){
+
+        console.log(err);
+        res.status(500).json({
+            message:'Error saving post'
+
+        });
+    }
+
+};

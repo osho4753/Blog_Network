@@ -10,7 +10,6 @@ export const Header = () => {
  const dispatch = useDispatch();
  
  const userData = useSelector(selectUserData);
-
  const Auth = useSelector(isAuth)
  const onClickLogout = () => {
   if(window.confirm('Are you sure you want to logout?')){

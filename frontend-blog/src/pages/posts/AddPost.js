@@ -13,7 +13,6 @@ export const AddPost = () => {
   const [title, setTitle] = React.useState('');
   const [tags, setTags] = React.useState('');
   const [postUrl, setPostUrl] = React.useState('');
-
   const handleChangeFile = async (event) => {
     try{
         const formData = new FormData()
@@ -36,7 +35,7 @@ export const AddPost = () => {
       title,
       tags: tags.split(','),
       postUrl,
-      text
+      text,
     }
      const {data} = isEdit ? 
      await config.patch(`/posts/${id}`,fields) : 

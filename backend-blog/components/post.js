@@ -25,7 +25,13 @@ user:{
     ref: 'User',
     required: true,
 },
-
+comments: [
+    {
+      type: Array,
+      ref: 'Comment',
+    },
+  ],
+  
 postUrl: String
 
 
