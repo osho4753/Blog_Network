@@ -6,6 +6,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return data;
 });
 
+
 export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
   const { data } = await config.get('/tags');
   return data;

@@ -3,12 +3,28 @@
     color: #fff; 
     padding: 10px 0; 
   }
-  
-  
   .header_name {
     display: flex; 
     justify-content: space-between; 
     align-items: center;
+  }
+  .header-items {
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+  }
+  .centered-text {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    height: 100%; 
+  }
+  .centered-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
   }
   
   .header_name div {

@@ -9,6 +9,7 @@ import { SideBlock } from "./SideBlock/SideBlock";
 import '../css/Tags.css';
 
 export const TagsBlock = ({ items, isLoading = true }) => {
+
   return (
     <SideBlock>
       <div className="tags-block-container"> 
@@ -24,7 +25,7 @@ export const TagsBlock = ({ items, isLoading = true }) => {
                 <ListItemIcon>
                   <TagIcon />
                 </ListItemIcon>
-                {isLoading ? <Skeleton width={100} /> : <ListItemText primary={name} />}
+                  {isLoading ? <Skeleton width={100} /> : <ListItemText primary={name} />}
               </ListItemButton>
             </a>
           ))}

@@ -28,7 +28,7 @@ export const FullPost = () => {
   if (Loading) {
     return <div>Loading...</div>; 
   }
-  console.log(data,'roma smari')
+
   return (
     <>
     <div className="full-post">

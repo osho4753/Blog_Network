@@ -16,7 +16,10 @@ console.log('DB connect');
 .catch((err) => {
   console.log(err,'error');
 });
+
 const app = express();
+app.use(express.json());
+app.use(cors());
 
 const storage = multer.diskStorage({
   destination: (_, __,cb)=>{
@@ -29,16 +32,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-app.use(express.json());
-app.use(cors());
-
 app.use('/uploads', express.static('uploadImages'))
-
-app.post('/auth/register',registerValidation, valErrors, registration);
-app.post('/auth/login',loginValidation, valErrors, login);
-app.get('/auth/me',checkLogin, getInfo);
-
-
 app.post('/uploads/avatar',upload.single('image'),(req,res)=>{
   res.json({
     url: `http://localhost:4444/uploads/${req.file.originalname}`,
@@ -49,6 +43,11 @@ app.post('/uploads',checkLogin,upload.single('image'),(req,res)=>{
     url: `http://localhost:4444/uploads/${req.file.originalname}`,
   })
 })
+
+
+app.post('/auth/register',registerValidation, valErrors, registration);
+app.post('/auth/login',loginValidation, valErrors, login);
+app.get('/auth/me',checkLogin, getInfo);
 
 
 app.get('/tags',getLastTags);

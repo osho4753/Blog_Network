@@ -21,7 +21,6 @@ export const Post = ({
   tags,
   children,
   isFullPost,
-  isLoading,
   isEditable,
 }) => {
   const dispatch = useDispatch();
@@ -53,33 +52,33 @@ export const Post = ({
       )}
       <div className="post-head">
         <UserInfo {...user}/>
-        <div className="post-date">
+      <div className="post-date">
         {createdAt.replace(/T.+/,'')}
-        </div>
-        <div className="post-head">
-          <h2 className="link-post">
-            {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
-          </h2>
-          <ul className="tags">
-            {tags.map((name) => (
-              <li key={name}>
-                <Link to={`/tags/${name}`}>#{name}</Link>
-              </li>
-            ))}
-          </ul>
+      </div>
+      <div className="post-head">
+        <h2 className="link-post">
+          {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
+        </h2>
+        <ul className="tags">
+          {tags.map((name) => (
+            <li key={name}>
+              <Link to={`/tags/${name}`}>#{name}</Link>
+            </li>
+          ))}
+        </ul>
           {children && <div className="child">{children}</div>}
-          <ul className="post-details">
-            <li>
-              <EyeIcon />
-              <span>{viewsCount}</span>
-            </li>
-            <li>
-              <CommentIcon />
-              <span>{commentsCount}</span>
-            </li>
-          </ul>
-        </div>
+        <ul className="post-details">
+          <li>
+            <EyeIcon />
+            <span>{viewsCount}</span>
+          </li>
+          <li>
+            <CommentIcon />
+            <span>{commentsCount}</span>
+          </li>
+        </ul>
       </div>
     </div>
+  </div>
   );
 };

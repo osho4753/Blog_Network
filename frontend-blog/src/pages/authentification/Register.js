@@ -63,7 +63,7 @@ export const Registration = () => {
 
   return (
     <Paper>
-      <Typography classes="register_acc" variant="h5">
+      <Typography variant="h5">
         Creating an Account
       </Typography>
       <div className="register_img" >
@@ -89,7 +89,7 @@ export const Registration = () => {
           </>)}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-<TextField 
+    <TextField 
       className="text_register" 
       label="Full Name"
       error={Boolean(errors.fullName)}
@@ -103,8 +103,8 @@ export const Registration = () => {
       },
       })}
       fullWidth 
-/>
-<TextField
+    />
+    <TextField
           className="login-text"
           label="E-Mail"
           error={Boolean(errors.email)}
@@ -118,8 +118,8 @@ export const Registration = () => {
             },
           })}
           fullWidth
-/>
-<TextField
+      />
+      <TextField
           className="login-text"
           label="Password"
           fullWidth
@@ -133,7 +133,7 @@ export const Registration = () => {
               message: `Password must be at least 5 characters long`,
             },
           })}
-/>
+        />
         <Button type = 'submit' size="large" variant="contained" disabled={!isValid} fullWidth>
         Register
       </Button>

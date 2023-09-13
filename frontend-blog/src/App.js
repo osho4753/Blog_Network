@@ -2,6 +2,7 @@ import React from "react";
 import Container from "@mui/material/Container";
 import {Header} from "./components/Header.js"; 
 import {Route, Routes} from "react-router-dom";
+import {Profile } from "./pages/Profile.js";
 import {Home } from "./pages/Home.js";
 import {Tags } from "./pages/TagsNamePosts.js";  
 import {FullPost} from "./pages/posts/FullPost.js";
@@ -25,6 +26,7 @@ function App() {
         console.error("Error fetching user:", error);
       });
   }, [dispatch]);
+  
   return (
   <>
     <Header/>
@@ -34,6 +36,7 @@ function App() {
       <Route path = "/posts/:id" element = {<FullPost />} />
       <Route path = "/posts/:id/edit" element = {<AddPost />} />
       <Route path = "/add-post" element = {<AddPost />} />
+      <Route path = "/profile" element = {<Profile />} />
       <Route path="/login" element={<Login/>} />
       <Route path = "/registration" element = {<Registration />} />
       <Route path = "/tags/:name" element = {<Tags />} />

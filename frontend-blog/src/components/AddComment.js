@@ -10,8 +10,11 @@ import {useParams} from "react-router-dom";
 import config from "../config";
 
 export const Index = () => {
+
   const userData = useSelector(selectUserData);
+
   const {id} = useParams();
+
   const [commentText, setCommentText] = useState("");
 
   const onSubmit = async () => {
@@ -35,6 +38,8 @@ export const Index = () => {
       console.log(err,'Wrong adding comment!');
     }
   }
+
+  
   return (
     <div className="write-comment">
       {userData ? (

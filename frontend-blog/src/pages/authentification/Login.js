@@ -10,8 +10,9 @@ import { Navigate } from 'react-router-dom';
 
 export const Login = () => {
   const dispatch = useDispatch();
+
   const Auth = useSelector(isAuth)
-  console.log(Auth,'auth');
+
   const {
     register,
     handleSubmit,
@@ -25,12 +26,15 @@ export const Login = () => {
   });
 
   const onSubmit = async (data) => {
+
   const user = await dispatch(fetchLogin(data))
+
     if(!user.payload){
       alert('cant login')
     }else if('token' in user.payload){
       window.localStorage.setItem('token', user.payload.token)
     }
+    
   };
  
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

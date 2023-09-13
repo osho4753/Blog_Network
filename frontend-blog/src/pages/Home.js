@@ -12,7 +12,9 @@ import { Typography } from '@mui/material';
 
 export const Home = () => {
   const dispatch = useDispatch();
+
   const userData = useSelector(selectUserData);
+
   const { posts, tags } = useSelector((state) => state.posts);
 
   const postLoading = posts.status === 'loading';
@@ -23,7 +25,7 @@ export const Home = () => {
   React.useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
-  }, []);
+  }, [dispatch]);
 
   const sortPostsByViews = (a, b) => {
     return b.viewsCount - a.viewsCount;
@@ -67,7 +69,7 @@ export const Home = () => {
               ))}
         </Grid>
         <Grid xs={4} item>
-          <Typography variant="h6">Popular post's tags</Typography>
+          <Typography variant="h6">Find posts by tag</Typography>
           <TagsBlock items={tags.items} isLoading={tagsLoading} />
         </Grid>
       </div>
