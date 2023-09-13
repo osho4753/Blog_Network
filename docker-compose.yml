@@ -1,0 +1,25 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend-blog  
+    ports:
+      - "3000:80"          
+    depends_on:
+      - backend            
+  backend:
+    build:
+      context: ./backend-blog 
+    ports:
+      - "4444:5000"
+    volumes: 
+      - .:/backend-blog
+      - /backend-blog/node_modules/bcrypt/        
+    environment:
+      MONGO_URI: mongodb+srv://ramazanmamanov840:r1o2m3a4@cluster1.oevaek4.mongodb.net/blog?retryWrites=true&w=majority 
+    depends_on:
+      - mongo           
+  mongo:
+    image: mongo:latest     
+    ports:
+      - "27017:27017"      
