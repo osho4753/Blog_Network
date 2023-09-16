@@ -6,16 +6,17 @@ import "../css/index.css";
 import { useSelector } from 'react-redux';
 import { selectUserData } from '../redux/slices/auth.js';
 import { Typography } from "@mui/material";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import config from "../config";
 
 export const Index = () => {
+  const navigate = useNavigate();
 
   const userData = useSelector(selectUserData);
 
   const {id} = useParams();
 
-  const [commentText, setCommentText] = useState("");
+  const [commentText, setCommentText] = useState([]);
 
   const onSubmit = async () => {
     try{  
@@ -26,14 +27,13 @@ export const Index = () => {
     
      await config.post(`/posts/comment/${id}`,data)
      .then((response) =>{
-      console.log(response.data);
+      setCommentText(response.data);
      })
      .catch((error) =>{
       console.log(error,'error creating')
      });
 
      setCommentText("");
-
     }catch(err){
       console.log(err,'Wrong adding comment!');
     }

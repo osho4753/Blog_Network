@@ -39,6 +39,7 @@ export const Profile = () => {
                     <Typography  variant="h3">
                         {userData.fullName}
                     </Typography>
+                    
                 </div>
                 <div className="centered-avatar">
                     <Avatar

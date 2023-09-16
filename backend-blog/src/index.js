@@ -7,15 +7,9 @@ import {registerValidation,loginValidation,postCreateValidation} from './validat
 import {registration,login,getInfo} from './controllers/authentification.js'
 import {postCreate,getAllPosts,getLastTags,getOnePost,deletePost,updatePost,getPostsByTag,commentAdd} from './controllers/postControll.js'
 import valErrors from './utils/valErrors.js';
+import mongoCon from './mongoCon.js';
 
-
-mongoose.connect('mongodb+srv://ramazanmamanov840:r1o2m3a4@cluster1.oevaek4.mongodb.net/blog?retryWrites=true&w=majority')
-.then(() => {
-console.log('DB connect');
-})
-.catch((err) => {
-  console.log(err,'error');
-});
+mongoCon()
 
 const app = express();
 app.use(express.json());
@@ -23,7 +17,7 @@ app.use(cors());
 
 const storage = multer.diskStorage({
   destination: (_, __,cb)=>{
-    cb(null,'uploadImages');
+    cb(null,'/uploads');
   },
   filename:(_,file,cb)=>{
     cb(null,file.originalname)
@@ -32,7 +26,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-app.use('/uploads', express.static('uploadImages'))
+app.use('/uploads', express.static('/uploads'));
 app.post('/uploads/avatar',upload.single('image'),(req,res)=>{
   res.json({
     url: `http://localhost:4444/uploads/${req.file.originalname}`,
@@ -61,8 +55,6 @@ app.post('/posts/comment/:id',checkLogin,commentAdd);
 
 app.delete('/posts/:id',checkLogin,deletePost);
 app.patch('/posts/:id',checkLogin,valErrors,updatePost);
-
-
 
 app.listen(4444, (err) => {
 

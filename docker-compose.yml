@@ -1,25 +1,24 @@
 version: '3'
 services:
   frontend:
-    build:
-      context: ./frontend-blog  
+    build: ./frontend-blog
     ports:
-      - "3000:80"          
+      - "3000:3000"
     depends_on:
-      - backend            
+      - backend
   backend:
-    build:
-      context: ./backend-blog 
+    build: ./backend-blog
     ports:
-      - "4444:5000"
-    volumes: 
-      - .:/backend-blog
-      - /backend-blog/node_modules/bcrypt/        
+      - "4444:4444"
+    volumes:
+      - myapp-uploads:/uploads
     environment:
-      MONGO_URI: mongodb+srv://ramazanmamanov840:r1o2m3a4@cluster1.oevaek4.mongodb.net/blog?retryWrites=true&w=majority 
+      MONGO_URI: mongodb+srv://ramazanmamanov840:r1o2m3a4@cluster1.oevaek4.mongodb.net/blog?retryWrites=true&w=majority
     depends_on:
-      - mongo           
+      - mongo
   mongo:
-    image: mongo:latest     
+    image: mongo:latest
     ports:
-      - "27017:27017"      
+      - "27017:27017"
+volumes:
+  myapp-uploads:
